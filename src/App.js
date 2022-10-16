@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import CardList from "./CardList";
+import ErrorBoundry from "./ErrorBoundry";
+
+import Searchbox from "./Searchbox";
 
 function App() {
+  const [query, setQuery] = useState("");
+  const [robotsArray, setRobotsArray] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then((users) => setRobotsArray(users));
+  }, []);
+
+  const onSearchChange = (robots) => {
+    return robots.filter((robot) =>
+      robot.name.toLowerCase().includes(query.toLowerCase())
+    );
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ErrorBoundry>
+      <div className="tc">
+        <h1 className="f1">RoboFriends</h1>
+        <Searchbox setQuery={setQuery} />
+
+        {robotsArray.length === 0 ? (
+          <h1>Loading</h1>
+        ) : (
+          <CardList robots={onSearchChange(robotsArray)} />
+        )}
+      </div>
+    </ErrorBoundry>
   );
 }
 
