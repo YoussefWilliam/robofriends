@@ -26,7 +26,7 @@ function App() {
         <Searchbox setQuery={setQuery} />
 
         {robotsArray.length === 0 ? (
-          <h1>Loading</h1>
+          <h1>Loading...</h1>
         ) : (
           <CardList robots={onSearchChange(robotsArray)} />
         )}
