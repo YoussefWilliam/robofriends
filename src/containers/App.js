@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import CardList from "./CardList";
-import ErrorBoundry from "./ErrorBoundry";
+import { ErrorBoundry, CardList } from "../components";
 
-import Searchbox from "./Searchbox";
+import Searchbox from "../components/Searchbox";
 
 function App() {
   const [query, setQuery] = useState("");
